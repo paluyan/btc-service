@@ -91,6 +91,7 @@ def average_daily():
 	} for price in avg_prices])
 
 @app.route('/monthly_averages')
+@auth.login_required
 def monthly_averages():
     monthly_avg_prices = db.session.query(
         extract('year', BitcoinPrice.timestamp).label('year'),
