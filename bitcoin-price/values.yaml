@@ -1,0 +1,21 @@
+# Default values.
+replicaCount: 1
+
+image:
+  repository: docker.io/poluyana/bitcoin-price
+  pullPolicy: IfNotPresent
+  tag: "latest"
+  pullSecret: regcred
+
+containerPort: 5000
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 5000
+
+ingress:
+  enabled: false
+
+  
+

@@ -1,0 +1,6 @@
+Flask
+Flask-SQLAlchemy
+pytz
+APScheduler
+requests
+Flask-HTTPAuth

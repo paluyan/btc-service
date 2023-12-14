@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "bitcoin-price.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "bitcoin-price.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "bitcoin-price.name" . }}
+    spec:
+      containers:
+        - name: bitcoin-price
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env:
+            - name: USERNAME_BTC
+              valueFrom:
+                secretKeyRef:
+                  name: btcsec
+                  key: username
+            - name: PSWD_BTC
+              valueFrom:
+                secretKeyRef:
+                  name: btcsec
+                  key: password
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.containerPort }}
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecret }}
